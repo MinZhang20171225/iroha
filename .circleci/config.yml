@@ -4,6 +4,7 @@ defaults: &defaults
     IROHA_HOME: /opt/iroha
     IROHA_BUILD: /opt/iroha/build
 
+
 defaults: &version
   environment:
     IROHA_VERSION: ${CIRCLE_TAG:-0x$CIRCLE_SHA1}
@@ -21,10 +22,11 @@ jobs:
     steps:
       - checkout
       - run: echo $(eval echo "$IROHA_VERSION")
+      - run: echo ~/.ccache; whoami
       - restore_cache:
           keys:
-            - build-cache-debug-{{ arch }}-{{ .Branch }}-
-            - build-cache-debug-{{ arch }}-
+            - v1-build-cache-debug-{{ arch }}-{{ .Branch }}-
+            - v1-build-cache-debug-{{ arch }}-
           paths:
             - ~/.ccache
       - run:

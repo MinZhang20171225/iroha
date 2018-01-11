@@ -7,6 +7,7 @@ ARG PARALLELISM=1
 ENV IROHA_HOME /opt/iroha
 ENV IROHA_BUILD /opt/iroha/build
 
+
 RUN apt-get update; \
     apt-get -y upgrade; \
     apt-get -y --no-install-recommends install apt-utils software-properties-common; \
@@ -194,5 +195,10 @@ RUN git clone git://github.com/warchant/ed25519.git /tmp/ed25519; \
     ldconfig; \
     rm -rf /tmp/ed25519
 
+RUN adduser iroha-dev
 WORKDIR /opt/iroha
+RUN chown -R iroha-dev:iroha-dev /opt/iroha; \
+    chmod -R 666 /root/.ccache
+USER iroha-dev
+
 CMD ["/bin/bash"]
